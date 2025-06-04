@@ -26,6 +26,5 @@ CREATE TABLE "ProductVariant" (
     "name" TEXT NOT NULL,
     "sourceName" TEXT NOT NULL,
     "value" TEXT NOT NULL,
-    "price" REAL NOT NULL,
-    CONSTRAINT "ProductVariant_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "price" REAL NOT NULL
 );
