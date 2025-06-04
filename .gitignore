@@ -46,6 +46,7 @@ next-env.d.ts
 
 # Data files
 data/
+scripts/**/*.js
 
 # Но сохраняем директорию data для структуры
 !data/.gitkeep
