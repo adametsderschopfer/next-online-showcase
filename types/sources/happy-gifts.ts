@@ -1,0 +1,276 @@
+export interface IHappyGiftsCatalog {
+    Catalog_items_export: {
+        Catalog_groups: [{
+            Group: IHappyGiftsCategory[]
+        }]
+        Items: [{
+            Item: IHappyGiftsItem[]
+        }]
+    }
+}
+
+export interface IHappyGiftsCategory {
+    ID: string[];
+    NAME: string[];
+    LEVEL: string[];
+    SUB_Group: IHappyGiftsSubGroup[];
+}
+
+export interface IHappyGiftsSubGroup {
+    ID: string[];
+    NAME: string[];
+    LEVEL: string[];
+    SUB_CHILD_Group: IHappyGiftsSubChildGroup[];
+}
+
+export interface IHappyGiftsSubChildGroup {
+    ID: string[];
+    NAME: string[];
+    LEVEL: string[];
+}
+
+export interface IHappyGiftsItem {
+    NAME: string[];
+    ID: string[];
+    GROUP_ID: string[];
+    BrendName: string[];
+    MATERIALS: string[];
+    Article: string[];
+    UnitWeight: string[];
+    UnitWeight_measure: string[];
+    UnitVolume: string[];
+    Color: string[];
+    Material: string[];
+    Applications: string[];
+    ColorCode: string[];
+    MinPrice: string[];
+    MaxPrice: string[];
+    AllArticles: string[];
+    Service: string[];
+    SubItems: IHappyGiftsSubItem[];
+}
+
+export interface IHappyGiftsSubItem {
+    SubItem: IHappyGiftsSubItemDetail[];
+}
+
+export interface IHappyGiftsSubItemDetail extends ICityQuantities{
+    NAME: string[];
+    ID: string[];
+    XML_ID: string[];
+    AVAIL: string[];
+    HaveTimeToBuy: string[];
+    FreeQuantityRostov: string[];
+    FreeQuantityNovosibi: string[];
+    FreeQuantityStPeters: string[];
+    COLOR_CODES: string[];
+    Size: string[];
+    GENDER: string[];
+    New: string[];
+    PromoSummerTextil2021_x2: string[];
+    PromoSummerTextil2021_x3: string[];
+    PromoSummerTextil2021_x5: string[];
+    SpringPoint12: string[];
+    SpringPoint18: string[];
+    Happiness2: string[];
+    Happiness3: string[];
+    NewYear2022: string[];
+    Happiness: string[];
+    Happiness4: string[];
+    Happiness1: string[];
+    Happiness5: string[];
+    March8: string[];
+    Length: string[];
+    Width: string[];
+    Specification: string[];
+    Color: string[];
+    ColorCode: string[];
+    FullArticle: string[];
+    SimpleColor: string[];
+    SimpleColorCode1: string[];
+    SimpleColorCode2: string[];
+    Comment_full_html: string[];
+    Comment: string[];
+    PackagingQuantity: string[];
+    PackagingWeight: string[];
+    PackagingVolume: string[];
+    PackagingSize: string[];
+    PackagingMaterial: string[];
+    PackagingType: string[];
+    Material1: string[];
+    Material2: string[];
+    Material3: string[];
+    OldPrice: string[];
+    POWERBOX_BOX_COLOR: string[];
+    SeasonalOffer: string[];
+    ForChildren: string[];
+    ClothesSizeRus: string[];
+    February23: string[];
+    UmbrellaType: string[];
+    DateFullFreeQuantityInTheWayList: string[];
+    FullQuantityInTheWayList: string[];
+    FreeQuantityInTheWayList: string[];
+    DateInTheWayList: string[];
+    FullQuantityInTheWay: string[];
+    FreeQuantityInTheWay: string[];
+    DateInTheWay: string[];
+    FullQuantityCenter: string[];
+    FreeQuantityCenter: string[];
+    DateCenter: string[];
+    FullQuantityStPeters: string[];
+    DateStPetersburg: string[];
+    FullQuantityVladivos: string[];
+    DateVladivostok: string[];
+    FullQuantityEkb: string[];
+    DateEkb: string[];
+    FullQuantityIrkutsk: string[];
+    DateIrkutsk: string[];
+    FullQuantityKazan: string[];
+    DateKazan: string[];
+    FullQuantityKrasnoyarsk: string[];
+    DateKrasnoyarsk: string[];
+    FullQuantityNijniNovgorod: string[];
+    DateNijniNovgorod: string[];
+    FullQuantityNovosibi: string[];
+    DateNovosibirsk: string[];
+    FullQuantityPerm: string[];
+    DatePerm: string[];
+    FullQuantityRostov: string[];
+    DateRostov: string[];
+    FullQuantitySamara: string[];
+    DateSamara: string[];
+    FullQuantityTumen: string[];
+    DateTumen: string[];
+    FullQuantityUfa: string[];
+    DateUfa: string[];
+    FullQuantityRemote: string[];
+    FullQuantitySample: string[];
+    FreeQuantitySample: string[];
+    DateSample: string[];
+    FullQuantityKhabarovsk: string[];
+    DateKhabarovsk: string[];
+    FullQuantityVoroneg: string[];
+    DateVoroneg: string[];
+    FullQuantityKrasnodar: string[];
+    FreeQuantityKrasnodar: string[];
+    DateKrasnodar: string[];
+    Analogs: string[];
+    OrderWithThisProduct: string[];
+    Price_drop: string[];
+    CARD_INT: string[];
+    CARD_FILTER_2: string[];
+    CARD_FILTER_3: string[];
+    UnderTheOrder: string[];
+    DownToZero: string[];
+    DefaultPicture: string[];
+    ExportPrice: string[];
+    ApplicationID: string[];
+    ApplicationPlace: string[];
+    WarmTextiles: string[];
+    BlackFriday: string[];
+    FreeApplication: string[];
+    BasePriceMP: string[];
+    PriceMP: string[];
+    DayBuilder: string[];
+    DiscountFifty: string[];
+    Green: string[];
+    Soft_touch: string[];
+    DayOil: string[];
+    DayLearning: string[];
+    DayProgrammers: string[];
+    DayMechanicalEng: string[];
+    Assembly_text: string[];
+    Assembly: string[];
+    DayEnergy: string[];
+    Marking: string[];
+    Substrate: string[];
+    May9: string[];
+    Zdorovye: string[];
+    HeavyMetal: string[];
+    PromoSummerTextil2021: string[];
+    BatteryCapacity: string[];
+    HappyBIG: string[];
+    Reflective: string[];
+    Units: string[];
+    Binding: string[];
+    Osobennost: string[];
+    Happiness_PSEVDO: string[];
+    JRC_PSEVDO: string[];
+    MadeInRussia: string[];
+    February14: string[];
+    Space: string[];
+    FruitOfTheLoom: string[];
+    IndividualPackType: string[];
+    SOLS_PSEVDO: string[];
+    ATLANTIS_PSEVDO: string[];
+    idz: string[];
+    THINKME_PSEVDO: string[];
+    ENOTE_PSEVDO: string[];
+    DAYS_WEEKS_PSEVDO: string[];
+    Y_NOTE_PSEVDO: string[];
+    BAG_FLY_PSEVDO: string[];
+    COFFICE_PSEVDO: string[];
+    ACCESSTYLE_PSEVDO: string[];
+    BIZZON_PSEVDO: string[];
+    MYCUP_PSEVDO: string[];
+    B1_PSEVDO: string[];
+    LECCE_PEN_PSEVDO: string[];
+    MERCHTEX_PSEVDO: string[];
+    THCLOTHES_PSEVDO: string[];
+    NASVIAZI_PSEVDO: string[];
+    NEOPEN_PSEVDO: string[];
+    MAXEMA_PSEVDO: string[];
+    WALZ_PSEVDO: string[];
+    BRISTOL_PSEVDO: string[];
+    WOODBOOK_PSEVDO: string[];
+    MarkingStarts: string[];
+    MaxCenterSort: string[];
+    HAPFULL_PSEVDO: string[];
+    VolumeinLiters: string[];
+    NumberOfWedges: string[];
+    FabricDensity: string[];
+    Sustainable: string[];
+    Sols_5: string[];
+    TypeOfBuckle: string[];
+    WarmTextiles2024: string[];
+    TitleAppEx: string[];
+    DescriptionAppEx: string[];
+    CustomSizePacA: string[];
+    CustomSizePacB: string[];
+    CustomSizePacC: string[];
+    Defect: string[];
+    ZeroQuantity: string[];
+    Presentation_ID: string[];
+    Equipment: string[];
+    LinksToVideos: string[];
+    SpecificationForArticle: string[];
+    Sales60: string[];
+    FULL_NAME: string[];
+    Price: string[];
+    Price_Group: string[];
+    paymentDate: string[];
+    deliveryDate: string[];
+    BlockedPrice: string[];
+    URL: string[];
+    Image: string[];
+    Constructor_Image: string[];
+}
+
+export interface ICityQuantities {
+    FreeQuantityRostov: string[];
+    FreeQuantityNovosibi: string[];
+    FreeQuantityStPeters: string[];
+    FreeQuantityVladivos: string[];
+    FreeQuantityEkb: string[];
+    FreeQuantityKrasnoyarsk: string[];
+    FreeQuantityPerm: string[];
+    FreeQuantitySamara: string[];
+    FreeQuantityKazan: string[];
+    FreeQuantityTumen: string[];
+    FreeQuantityUfa: string[];
+    FreeQuantityIrkutsk: string[];
+    FreeQuantityNijniNovgorod: string[];
+    FreeQuantityKhabarovsk: string[];
+    FreeQuantityVoroneg: string[];
+    FreeQuantityKrasnodar: string[];
+}
