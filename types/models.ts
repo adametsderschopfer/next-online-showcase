@@ -12,6 +12,10 @@ export interface ICategory {
     sourceName: EDataSourceName
 }
 
+export interface IPicture {
+    url: string;
+}
+
 export interface IProduct {
     id: string
     name: string
@@ -19,6 +23,7 @@ export interface IProduct {
     price?: number | null
     sourceName: EDataSourceName
     categoryId?: string | null
+    pictures?: string
 }
 
 export interface IProductVariant {
@@ -28,4 +33,5 @@ export interface IProductVariant {
     value: string;
     price: number;
     sourceName: EDataSourceName
+    pictures?: string
 }
