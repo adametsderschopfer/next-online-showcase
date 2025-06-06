@@ -23,7 +23,7 @@ export interface IProduct {
     price?: number | null
     sourceName: EDataSourceName
     categoryId?: string | null
-    pictures?: string
+    pictures?: string // тут json массив {url: string}[]
 }
 
 export interface IProductVariant {
@@ -33,5 +33,5 @@ export interface IProductVariant {
     value: string;
     price: number;
     sourceName: EDataSourceName
-    pictures?: string
+    pictures?: string // тут json массив {url: string}[]
 }
