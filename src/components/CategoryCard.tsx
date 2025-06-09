@@ -8,14 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {ICategory} from "../../types";
 
 interface CategoryCardProps {
-  category: {
-    id: string;
-    name: string;
-    level0Link: string;
-    level1Categories: string[];
-  };
+  category: ICategory & {
+    subCategories: ICategory[]
+  }
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
@@ -23,18 +21,18 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
     <Card className="flex flex-col">
       <CardHeader>
         <CardTitle>
-          <Link href={category.level0Link} className="hover:underline">
+          <Link href={`/catalog/${category.id}`} className="hover:underline">
             {category.name}
           </Link>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow text-sm text-gray-600">
-        {category.level1Categories.map((subCat, index) => (
+        {category.subCategories.map((subCat, index) => (
           <React.Fragment key={index}>
-            <Link href={`/catalog/${encodeURIComponent(subCat)}`} className="hover:underline">
-              {subCat}
+            <Link href={`/catalog/${encodeURIComponent(subCat.id)}`} className="hover:underline">
+              {subCat.name}
             </Link>
-            {index < category.level1Categories.length - 1 && " • "}
+            {index < category.subCategories.length - 1 && " • "}
           </React.Fragment>
         ))}
       </CardContent>

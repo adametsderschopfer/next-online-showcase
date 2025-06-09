@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
   },
+  async rewrites() {
+    return [
+      {
+        source: '/thumbnails/:path*',
+        destination: '/api/image/gifts/:path*',
+      },
+    ];
+  },
 };
 
 export default withPayload(nextConfig);

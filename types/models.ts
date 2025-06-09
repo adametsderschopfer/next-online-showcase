@@ -12,10 +12,6 @@ export interface ICategory {
     sourceName: EDataSourceName
 }
 
-export interface IPicture {
-    url: string;
-}
-
 export interface IProduct {
     id: string
     name: string
@@ -23,15 +19,5 @@ export interface IProduct {
     price?: number | null
     sourceName: EDataSourceName
     categoryId?: string | null
-    pictures?: string // тут json массив {url: string}[]
-}
-
-export interface IProductVariant {
-    id: string;
-    productId: string;
-    name: string;
-    value: string;
-    price: number;
-    sourceName: EDataSourceName
     pictures?: string // тут json массив {url: string}[]
 }

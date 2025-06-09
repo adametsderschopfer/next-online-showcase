@@ -1,6 +1,6 @@
 import {CollectionConfig} from "payload";
 
-const Feedback: CollectionConfig = {
+export const Feedback: CollectionConfig = {
   slug: 'feedback',
   fields: [
     {
@@ -19,15 +19,44 @@ const Feedback: CollectionConfig = {
       name: 'message',
       type: 'textarea',
       label: 'Сообщение',
-      required: true,
+      required: false,
+    },
+    {
+      name: 'products',
+      type: 'array',
+      label: 'Список продуктов',
+      required: false,
+      admin: {
+        readOnly: true,
+        description: 'Список продуктов, связанный с этим отзывом (только для просмотра)',
+        width: 'full',
+      },
+      fields: [
+        {
+          name: 'id',
+          type: 'text',
+          label: 'ID продукта',
+        },
+        {
+          name: 'name',
+          type: 'text',
+          label: 'Название продукта',
+        },
+        {
+          name: 'price',
+          type: 'text',
+          label: 'Цена',
+        },
+        {
+          name: 'sourceName',
+          type: 'text',
+          label: 'Продукт из источника',
+        },
+      ],
     },
   ],
   access: {
     create: () => true,
-    read: ({req}: any) => req.user?.role === 'admin',
-    update: ({req}: any) => req.user?.role === 'admin',
-    delete: ({req}: any) => req.user?.role === 'admin',
   },
 };
 
-export default Feedback;

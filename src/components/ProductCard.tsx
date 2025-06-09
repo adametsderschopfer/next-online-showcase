@@ -1,25 +1,29 @@
 'use client';
 
-import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState, useEffect } from 'react';
+import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Link from 'next/link';
-
-interface ProductData {
-  id: string;
-  name: string;
-  description?: string | null;
-  price?: number | null;
-  pictures?: string; 
-}
+import {addToCart, getCartItems} from '@/lib/cart';
+import {IProduct} from "../../types";
 
 interface ProductCardProps {
-  product: ProductData;
+  product: IProduct;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const [isInCart, setIsInCart] = useState<boolean>(false);
+
+  useEffect(() => {
+    const cartItems = getCartItems();
+    const isProductInCart = cartItems.some((item: IProduct) => item.id === product.id);
+    setIsInCart(isProductInCart);
+  }, [product.id]);
+
   const handleAddToCart = () => {
-    console.log(`Добавить в корзину: ${product.name} (ID: ${product.id})`);
+    if (!isInCart) {
+      addToCart(product as IProduct);
+      setIsInCart(true);
+    }
   };
 
   let imageUrl = '';
@@ -36,11 +40,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   return (
     <Card className="w-full h-full flex flex-col">
-      <Link href={`/catalog/product/${product.id}`} className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow">
         <CardHeader>
-          <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+          <div className="w-full h-71 bg-gray-200 flex items-center justify-center text-gray-500">
             {imageUrl ? (
-              <img src={imageUrl} alt={product.name} className="w-full h-full object-cover" />
+              <img src={imageUrl} alt={product.name} className="w-full h-full object-contain" />
             ) : (
               'Изображение'
             )}
@@ -48,21 +52,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </CardHeader>
         <CardContent className="flex-grow">
           <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
-          {product.description && (
-            <p className="text-sm text-gray-600 mt-2 line-clamp-3">{product.description}</p>
-          )}
+          <CardDescription>{product.description}</CardDescription>
         </CardContent>
-      </Link>
+      </div>
       <CardFooter className="flex justify-between items-center">
         {product.price !== null && product.price !== undefined ? (
           <span className="text-xl font-bold">{product.price.toFixed(2)} руб.</span>
         ) : (
           <span className="text-md text-gray-700">Цена не указана</span>
         )}
-        <Button onClick={handleAddToCart}>В корзину</Button>
+        <Button onClick={handleAddToCart} disabled={isInCart} style={{cursor: "pointer"}}>
+          {isInCart ? 'В корзине' : 'В корзину'}
+        </Button>
       </CardFooter>
     </Card>
   );
 };
 
-export default ProductCard; 
+export default ProductCard;

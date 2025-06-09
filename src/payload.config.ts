@@ -6,9 +6,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
-
-import { Users } from './collections/users'
-import { Media } from './collections/media'
+import {Feedback, Media, Users} from "@/collections";
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -20,7 +18,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Feedback],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -28,12 +26,11 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.ADMIN_DATABASE_URI || '',
     },
   }),
   sharp,
   plugins: [
     payloadCloudPlugin(),
-    // storage-adapter-placeholder
   ],
 })
