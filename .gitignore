@@ -50,4 +50,4 @@ scripts/**/*.js
 
 # Но сохраняем директорию data для структуры
 !data/.gitkeep
-/src/generated/prisma
+/prisma/generated

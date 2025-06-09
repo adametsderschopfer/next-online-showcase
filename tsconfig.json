@@ -26,6 +26,7 @@
     ],
     "paths": {
       "@payload-config": ["./src/payload.config.ts"],
+      "@/prisma/*": ["./prisma/*"],
       "@/*": [
         "./src/*"
       ]
