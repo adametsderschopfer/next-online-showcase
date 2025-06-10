@@ -25,8 +25,12 @@
       }
     ],
     "paths": {
-      "@payload-config": ["./src/payload.config.ts"],
-      "@/prisma/*": ["./prisma/*"],
+      "@payload-config": [
+        "./src/payload.config.ts"
+      ],
+      "@/prisma/*": [
+        "./prisma/*"
+      ],
       "@/*": [
         "./src/*"
       ]
@@ -42,7 +46,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "prisma/**/*.ts",
+    "prisma/**/*.ts"
   ],
   "exclude": [
     "node_modules"

@@ -7,9 +7,7 @@ interface Params {
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-const imageCache: { [key: string]: Buffer } = {};
-
-const fetchWithRetry = async (url: string, retries: number = 10): Promise<any> => {
+const fetchWithRetry = async (url: string, retries: number = 10): Promise<ArrayBuffer> => {
   const username = process.env.GIFTS_RU_LOGIN;
   const password = process.env.GIFTS_RU_PASSWORD;
 
@@ -46,19 +44,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<Pa
   const imagePath = path.join('/');
   const externalUrl = `https://api2.gifts.ru/export/v2/catalogue/thumbnails/${imagePath}`;
 
-  if (imageCache[externalUrl]) {
-    return new NextResponse(imageCache[externalUrl], {
-      status: 200,
-      headers: {
-        'Content-Type': 'image/jpeg',
-      },
-    });
-  }
-
   try {
     const imageBuffer = await fetchWithRetry(externalUrl);
-    imageCache[externalUrl] = imageBuffer;
-
     return new NextResponse(imageBuffer, {
       status: 200,
       headers: {

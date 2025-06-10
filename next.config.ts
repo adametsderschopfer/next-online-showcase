@@ -3,9 +3,6 @@ import withPayload from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
   output: "standalone",
-  experimental: {
-    reactCompiler: false,
-  },
   async rewrites() {
     return [
       {
