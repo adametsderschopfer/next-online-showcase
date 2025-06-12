@@ -3,7 +3,7 @@ import './globals.css'
 import Header from '@/components/Header'
 
 export const metadata = {
-  title: 'Online Showcase',
+  title: 'Проект 18.12',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

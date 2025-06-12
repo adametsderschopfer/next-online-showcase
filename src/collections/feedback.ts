@@ -16,6 +16,12 @@ export const Feedback: CollectionConfig = {
       required: true,
     },
     {
+      name: 'phone',
+      type: 'text',
+      label: 'Телефон',
+      required: true,
+    },
+    {
       name: 'message',
       type: 'textarea',
       label: 'Сообщение',
@@ -41,6 +47,11 @@ export const Feedback: CollectionConfig = {
           name: 'name',
           type: 'text',
           label: 'Название продукта',
+        },
+        {
+          name: 'article',
+          type: 'text',
+          label: 'Артикул',
         },
         {
           name: 'price',

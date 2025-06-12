@@ -9,14 +9,13 @@ datasource db {
 }
 
 model Category {
-  id         String   @id
-  parentId   String?
-  level      Int
-  name       String
-  sourceName String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
+  id            String     @id
+  parentId      String?
+  level         Int
+  name          String
+  sourceName    String
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   parent        Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id])
   subCategories Category[] @relation("CategoryHierarchy")
   products      Product[]
@@ -26,17 +25,17 @@ model Category {
 }
 
 model Product {
-  id          String   @id
+  id          String    @id
   categoryId  String?
   name        String
+  article     String?
   description String?
   price       Float?
   sourceName  String
-  pictures    String   @default("'[]'")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  category Category? @relation(fields: [categoryId], references: [id])
+  pictures    String    @default("'[]'")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  category    Category? @relation(fields: [categoryId], references: [id])
 
   @@index([categoryId])
   @@map("products")

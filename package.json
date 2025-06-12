@@ -1,8 +1,9 @@
 {
-  "name": "online-store",
+  "name": "project_18_12",
   "packageManager": "yarn@4.9.1",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "postinstall": "prisma generate",
     "dev": "next dev --turbopack",

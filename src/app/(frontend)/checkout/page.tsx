@@ -18,10 +18,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { IProduct } from "../../../../types";
 import {clearCart, getCartItems, removeFromCart} from "@/lib/cart";
+import {formatRubCurrency} from "@/lib/format";
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Имя должно содержать не менее 2 символов." }),
   email: z.string().email({ message: "Введите корректный email адрес." }),
+  phone: z.string().min(10, { message: "Введите корректный номер телефона." }),
   message: z.string().optional(),
 });
 
@@ -41,6 +43,7 @@ export default function CheckoutPage() {
     defaultValues: {
       name: '',
       email: '',
+      phone: '',
       message: '',
     },
   });
@@ -104,7 +107,7 @@ export default function CheckoutPage() {
             {cartItems.map((item) => (
               <div key={item.id} className="flex justify-between items-center border-b py-3 pb-5">
                 <p className="font-semibold max-w-[400px]">{item.name}</p>
-                <p className="font-bold ml-auto mr-7">{item.price ? (item.price).toFixed(2) : '0'} руб.</p>
+                <p className="font-bold ml-auto mr-7">{item.price ? formatRubCurrency(item.price) : '0'}</p>
                 <Button onClick={() => handleRemoveFromCart(item.id)}>Удалить</Button>
               </div>
             ))}
@@ -112,7 +115,7 @@ export default function CheckoutPage() {
 
           <div className="mt-6 flex justify-between items-center font-bold text-lg">
             <span>Итого:</span>
-            <span>{totalAmount.toFixed(2)} руб.</span>
+            <span>{formatRubCurrency(totalAmount)}</span>
           </div>
 
           <div className="mt-8 text-right">
@@ -146,6 +149,14 @@ export default function CheckoutPage() {
                 <Input id="email" type="email" {...register("email")} className="col-span-3"/>
                 {errors.email &&
                   <p className="col-span-4 text-right text-red-500 text-xs mt-1">{errors.email.message}</p>}
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="phone" className="text-right">
+                  Телефон
+                </Label>
+                <Input id="phone" type="tel" {...register("phone")} className="col-span-3" />
+                {errors.phone &&
+                  <p className="col-span-4 text-right text-red-500 text-xs mt-1">{errors.phone.message}</p>}
               </div>
               <div className="grid grid-cols-4 items-start gap-4">
                 <Label htmlFor="message" className="text-right">

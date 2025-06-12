@@ -5,6 +5,7 @@ import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} f
 import { Button } from "@/components/ui/button";
 import {addToCart, getCartItems} from '@/lib/cart';
 import {IProduct} from "../../types";
+import {formatRubCurrency} from "@/lib/format";
 
 interface ProductCardProps {
   product: IProduct;
@@ -57,7 +58,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
       <CardFooter className="flex justify-between items-center">
         {product.price !== null && product.price !== undefined ? (
-          <span className="text-xl font-bold">{product.price.toFixed(2)} руб.</span>
+          <span className="text-xl font-bold">{formatRubCurrency(product.price)}</span>
         ) : (
           <span className="text-md text-gray-700">Цена не указана</span>
         )}
