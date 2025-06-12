@@ -2,7 +2,7 @@ FROM node:22.12.0-alpine AS base
 
 ENV NEXT_TELEMETRY_DISABLED=1 NODE_ENV=production YARN_VERSION=4.9.1
 
-RUN apk update && apk upgrade && apk add --no-cache libc6-compat dumb-init openssl cronie
+RUN apk update && apk upgrade && apk add --no-cache libc6-compat dumb-init openssl
 
 RUN corepack enable && corepack prepare yarn@${YARN_VERSION}
 
@@ -27,5 +27,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/scripts /app/scripts
 
 USER nextjs
 
-RUN echo "0 3 * * * cd /app && yarn import-data" | crontab -
-CMD ["sh", "-c", "crond && dumb-init node server.js"]
+EXPOSE 3000
+ENV PORT 3000
+
+CMD ["dumb-init", "node", "server.js"]
