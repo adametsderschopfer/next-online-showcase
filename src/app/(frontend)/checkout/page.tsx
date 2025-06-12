@@ -57,6 +57,7 @@ export default function CheckoutPage() {
       ...data,
       products: cartItems.map(item => ({
         id: item.id,
+        article: item.article,
         name: item.name,
         price: item.price,
         sourceName: item.sourceName,

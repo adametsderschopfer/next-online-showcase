@@ -28,6 +28,7 @@ model Product {
   id          String    @id
   categoryId  String?
   name        String
+  brand       String?
   article     String?
   description String?
   price       Float?

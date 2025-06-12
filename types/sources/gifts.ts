@@ -27,7 +27,7 @@ export interface IGiftsRawProduct {
     group: string[];
     name: string[];
     product_size: string[];
-    material: string[];
+    matherial: string[];
     content: string[];
     brand: string[];
     weight: string[];

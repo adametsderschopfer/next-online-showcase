@@ -15,6 +15,8 @@ export interface ICategory {
 export interface IProduct {
     id: string
     name: string
+    brand?: string | null;
+    article?: string | null;
     description?: string | null
     price?: number | null
     sourceName: EDataSourceName

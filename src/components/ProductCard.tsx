@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import Image from 'next/image'; // Импортируем Image для оптимизации
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {addToCart, getCartItems} from '@/lib/cart';
-import {IProduct} from "../../types";
-import {formatRubCurrency} from "@/lib/format";
+import { addToCart, getCartItems } from '@/lib/cart';
+import { IProduct } from "../../types";
+import { formatRubCurrency } from "@/lib/format";
 
 interface ProductCardProps {
   product: IProduct;
@@ -27,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
   };
 
-  let imageUrl = '';
+  let imageUrl = '/image/image-placeholder.webp'; // Заглушка по умолчанию
   if (product.pictures) {
     try {
       const pics = JSON.parse(product.pictures);
@@ -39,21 +40,55 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
   }
 
+  const [imgError, setImgError] = useState<boolean>(false);
+
+  const handleImageError = () => {
+    setImgError(true);
+  };
+
   return (
     <Card className="w-full h-full flex flex-col">
       <div className="flex flex-col flex-grow">
         <CardHeader>
-          <div className="w-full h-71 bg-gray-200 flex items-center justify-center text-gray-500">
-            {imageUrl ? (
-              <img src={imageUrl} alt={product.name} className="w-full h-full object-contain" />
-            ) : (
-              'Изображение'
-            )}
+          <div className="w-full h-[284px] bg-gray-200 flex items-center justify-center text-gray-500">
+            <Image
+              src={imgError ? '/image/image-placeholder.webp' : imageUrl}
+              alt={product.name}
+              width={284}
+              height={284}
+              className="object-contain h-284"
+              onError={handleImageError}
+              placeholder="blur"
+              blurDataURL="/image/image-placeholder.webp"
+            />
           </div>
         </CardHeader>
         <CardContent className="flex-grow">
           <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
-          <CardDescription>{product.description}</CardDescription>
+          <CardDescription>
+            {product.article && (
+              <>
+                <span> Артикул: {product.article}</span>
+                <br />
+              </>
+            )}
+            {product.brand && (
+              <>
+                <span> Бренд: {product.brand}</span>
+                <br />
+              </>
+            )}
+            {product.description && (
+              <>
+                <br />
+                {(() => {
+                  const LENGTH = 150;
+                  const pd = product.description.substring(0, LENGTH);
+                  return pd.length >= LENGTH ? `${pd}...` : product.description;
+                })()}
+              </>
+            )}
+          </CardDescription>
         </CardContent>
       </div>
       <CardFooter className="flex justify-between items-center">
@@ -62,7 +97,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         ) : (
           <span className="text-md text-gray-700">Цена не указана</span>
         )}
-        <Button onClick={handleAddToCart} disabled={isInCart} style={{cursor: "pointer"}}>
+        <Button onClick={handleAddToCart} disabled={isInCart} style={{ cursor: "pointer" }}>
           {isInCart ? 'В корзине' : 'В корзину'}
         </Button>
       </CardFooter>

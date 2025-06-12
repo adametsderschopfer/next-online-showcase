@@ -9,13 +9,25 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  async rewrites() {
-    return [
+  images: {
+    remotePatterns: [
       {
-        source: '/thumbnails/:path*',
-        destination: '/api/image/gifts/:path*',
+        protocol: 'https',
+        hostname: 'files.gifts.ru',
+        pathname: '/reviewer/webp/**',
       },
-    ];
+      {
+        protocol: 'https',
+        hostname: 's.a-5.ru',
+        pathname: '/p/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'happygifts.ru',
+        pathname: '/catalog-images/**',
+      },
+    ],
+    formats: ['image/webp'],
   },
 };
 
