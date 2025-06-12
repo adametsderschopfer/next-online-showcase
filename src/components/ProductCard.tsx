@@ -56,7 +56,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               alt={product.name}
               width={284}
               height={284}
-              className="object-contain h-284"
+              className="object-contain w-full h-full"
               onError={handleImageError}
               placeholder="blur"
               blurDataURL="/image/image-placeholder.webp"
