@@ -1,22 +1,26 @@
 import React from 'react'
 import './globals.css'
-import Header from '@/components/Header'
+import Header from '@/components/header/header'
+import {AntdRegistry} from "@ant-design/nextjs-registry";
+import {Layout} from 'antd';
 
 export const metadata = {
   title: 'Проект 18.12',
 }
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
-  const {children} = props
-
+const RootLayout = ({children}: { children: React.ReactNode }) => {
   return (
     <html lang="en">
     <body>
+    <AntdRegistry>
       <Header/>
-      <div className="container mx-auto max-w-[1440px] px-4">
+      <Layout style={{maxWidth: '1440px', margin: '0 auto', padding: '16px' , backgroundColor: '#fff'}}>
         <main>{children}</main>
-      </div>
+      </Layout>
+    </AntdRegistry>
     </body>
     </html>
   )
 }
+
+export default RootLayout;

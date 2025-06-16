@@ -1,13 +1,16 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import ProductCard from '@/components/ProductCard';
+import ProductCard from '@/components/product-card';
 import useSWR from 'swr';
-import {ICategory, IProduct} from "../../../../../types";
+import { ICategory, IProduct } from "../../../../../types";
+import { Row, Col, Typography, Button, Spin, Drawer } from 'antd';
+
+const { Title, Text } = Typography;
 
 const fetchProducts = async (categoryId: string, page: number) => {
-  const res = await fetch(`/api/catalog/${categoryId}?page=${page}&limit=32`);
+  const res = await fetch(`/api/catalog/${categoryId}?page=${page}&limit=16`);
   return await res.json();
 };
 
@@ -19,17 +22,20 @@ const fetchSubCategories = async (categoryId: string) => {
   return res.json();
 };
 
-const ProductListPage = ({params}: { params: Promise<{ categoryId: string }> }) => {
+const ProductListPage = ({ params }: { params: Promise<{ categoryId: string }> }) => {
   const categoryId = React.use(params).categoryId;
   const [page, setPage] = useState(1);
-  const [allProducts, setAllProducts] = useState<IProduct[]>([]); // Храним все товары
+  const [allProducts, setAllProducts] = useState<IProduct[]>([]);
 
-  const {data, error, isLoading} = useSWR(
+  const { data, error, isLoading } = useSWR(
     categoryId ? `/api/catalog/${categoryId}?page=${page}&limit=16` : null,
     () => fetchProducts(categoryId, page)
   );
 
   const [subCategories, setSubCategories] = useState<ICategory[]>([]);
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const loadSubCategories = async () => {
       try {
@@ -41,6 +47,17 @@ const ProductListPage = ({params}: { params: Promise<{ categoryId: string }> }) 
     };
 
     loadSubCategories();
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 992); // Проверка, является ли устройство мобильным
+    };
+
+    handleResize(); // Инициализация на старте
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, [categoryId]);
 
   useEffect(() => {
@@ -53,47 +70,102 @@ const ProductListPage = ({params}: { params: Promise<{ categoryId: string }> }) 
     setPage(prevPage => prevPage + 1);
   };
 
+  const handleOpenDrawer = () => {
+    setIsDrawerVisible(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerVisible(false);
+  };
+
   return (
-    <div className="flex flex-col mt-6 mb-8 items-start">
-      {subCategories.length !== 0 && (
-        <aside className="w-[300px] mb-5">
-          <h2 className="text-xl font-semibold mb-4">Категории</h2>
-          <nav>
-            <ul>
-              {subCategories.map((category) => (
-                <li key={category.id} className="mb-2">
-                  <Link href={`/catalog/${category.id}`} className="font-medium hover:underline">
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </aside>
+    <>
+      {subCategories.length > 0 && isMobile && (
+        <Button
+          type="primary"
+          style={{
+            width: '100%',
+            marginBottom: '16px',
+          }}
+          onClick={handleOpenDrawer}
+        >
+          Категории
+        </Button>
       )}
 
-      {allProducts.length !== 0 || allProducts.length === 0 && isLoading ? (
-        <div className="flex-grow">
-          <h1 className="text-2xl font-bold mb-6">Страница списка товаров</h1>
-          {error && <div>Ошибка загрузки товаров.</div>}
-          {isLoading && <div>Загрузка...</div>}
+      <Row gutter={[16, 16]}>
+        {subCategories.length > 0 && !isMobile && (
+          <Col xs={24} sm={6} md={6} lg={5}>
+            <aside style={{ marginBottom: '16px' }}>
+              <Title level={4}>Категории</Title>
+              <nav>
+                <ul>
+                  {subCategories.map((category) => (
+                    <li key={category.id} style={{ marginBottom: '8px' }}>
+                      <Link href={`/catalog/${category.id}`}>
+                        <Text strong>{category.name}</Text>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </aside>
+          </Col>
+        )}
 
-          <div className="grid grid-cols-4 gap-6">
-            {allProducts.map((product: IProduct) => (
-              <ProductCard key={`${product.categoryId}_${product.id}`} product={product}/>
-            ))}
-          </div>
+        <Col xs={24} sm={18} md={18} lg={subCategories.length > 0 ? 19 : 24}>
+          {allProducts.length !== 0 || isLoading ? (
+            <>
+              <Title level={2}>Товары</Title>
 
-          {data && allProducts.length < data.totalCount && (
-            <div className="text-center mt-8 py-5">
-              <button onClick={handleLoadMore} className="text-blue-500 hover:underline py-4 px-4 cursor-pointer">
-                Загрузить еще
-              </button>
-            </div>
+              {error && <Text type="danger">Ошибка загрузки товаров.</Text>}
+              {isLoading && <Spin size="large" />}
+
+              <Row gutter={[16, 16]} justify="space-between" align="stretch">
+                {allProducts.map((product: IProduct) => (
+                  <Col key={`${product.categoryId}_${product.id}`} xs={24} sm={12} lg={8} xl={6}>
+                    <ProductCard product={product} />
+                  </Col>
+                ))}
+              </Row>
+
+              {data && allProducts.length < data.totalCount && (
+                <div style={{ textAlign: 'center', marginTop: '32px' }}>
+                  <Button
+                    onClick={handleLoadMore}
+                    type="primary"
+                    size="large"
+                    loading={isLoading}
+                  >
+                    Загрузить еще
+                  </Button>
+                </div>
+              )}
+            </>
+          ) : (
+            <Text>Нет товаров в этой категории.</Text>
           )}
-        </div>
-      ) : null}
-    </div>
+        </Col>
+      </Row>
+
+      <Drawer
+        title="Категории"
+        placement="left"
+        onClose={handleCloseDrawer}
+        open={isDrawerVisible}
+        width={300}
+      >
+        <ul>
+          {subCategories.map((category) => (
+            <li key={category.id} style={{ marginBottom: '8px' }}>
+              <Link href={`/catalog/${category.id}`}>
+                <Text strong>{category.name}</Text>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Drawer>
+    </>
   );
 };
 

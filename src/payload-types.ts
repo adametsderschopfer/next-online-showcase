@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    feedback: Feedback;
+    order: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -78,7 +78,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    feedback: FeedbackSelect<false> | FeedbackSelect<true>;
+    order: OrderSelect<false> | OrderSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -153,9 +153,9 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "feedback".
+ * via the `definition` "order".
  */
-export interface Feedback {
+export interface Order {
   id: number;
   name: string;
   email: string;
@@ -166,11 +166,12 @@ export interface Feedback {
    */
   products?:
     | {
-        id?: string | null;
+        product_id?: string | null;
         name?: string | null;
         article?: string | null;
         price?: string | null;
         sourceName?: string | null;
+        id?: string | null;
       }[]
     | null;
   updatedAt: string;
@@ -192,8 +193,8 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'feedback';
-        value: number | Feedback;
+        relationTo: 'order';
+        value: number | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -272,9 +273,9 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "feedback_select".
+ * via the `definition` "order_select".
  */
-export interface FeedbackSelect<T extends boolean = true> {
+export interface OrderSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   phone?: T;
@@ -282,11 +283,12 @@ export interface FeedbackSelect<T extends boolean = true> {
   products?:
     | T
     | {
-        id?: T;
+        product_id?: T;
         name?: T;
         article?: T;
         price?: T;
         sourceName?: T;
+        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

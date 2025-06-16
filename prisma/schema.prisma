@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "./generated"
+  provider         = "prisma-client-js"
+  output           = "./generated"
+  connection_limit = 10
 }
 
 datasource db {

@@ -1,20 +1,31 @@
-import React from 'react';
+import React, {use} from 'react';
 import {getCategories} from "@/lib/actions/getCategories";
-import CategoryCard from "@/components/CategoryCard";
+import CategoryCard from "@/components/category-card";
+import {Row, Col, Skeleton} from 'antd';
+import HeadTitle from "@/components/ui/head-title";
 
-const HomePage = async () => {
-  const data = await getCategories();
+
+const HomePage = () => {
+  const data = use(getCategories());
 
   return (
-    <div className="py-8">
-      <h1 className="text-2xl font-bold mb-6 text-center">Категории товаров</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {data.map(category => (
-          <CategoryCard key={category.id} category={category} />
-        ))}
-      </div>
-    </div>
+    <>
+      <HeadTitle title={'Категории товаров'}/>
+      <Row gutter={[16, 16]} justify="center">
+        {data.length ? (
+          data.map((category) => (
+            <Col key={category.id} xs={24} sm={12} lg={8} xl={6}>
+              <CategoryCard category={category}/>
+            </Col>
+          ))
+        ) : (
+          <Col span={24}>
+            <Skeleton active/>
+          </Col>
+        )}
+      </Row>
+    </>
   );
-}
+};
 
 export default HomePage;

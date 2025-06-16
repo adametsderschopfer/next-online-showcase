@@ -1,7 +1,7 @@
 import {CollectionConfig} from "payload";
 
-export const Feedback: CollectionConfig = {
-  slug: 'feedback',
+export const Order: CollectionConfig = {
+  slug: 'order',
   fields: [
     {
       name: 'name',
@@ -39,7 +39,8 @@ export const Feedback: CollectionConfig = {
       },
       fields: [
         {
-          name: 'id',
+          unique: false,
+          name: 'product_id',
           type: 'text',
           label: 'ID продукта',
         },
